@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'">
+<title>Pocket Python</title>
+<link rel="stylesheet" href="vendor/codemirror.css">
+<link rel="stylesheet" href="vendor/show-hint.css">
+<link rel="stylesheet" href="vendor/dialog.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <button class="icon-button" id="filesButton" title="Files" aria-label="Open files"><svg viewBox="0 0 24 24"><path d="M3 7h7l2 2h9v11H3zM3 7V4h7l2 3"/></svg></button>
+  <div class="brand"><span class="brand-name">pocket<span>python</span><i></i></span><span class="brand-sub">YOUR IDE, ANYWHERE</span></div>
+  <button class="icon-button" id="saveButton" aria-label="Save file" title="Save"><svg viewBox="0 0 24 24"><path d="M4 3h13l3 3v15H4zM8 3v6h8V3M8 21v-8h8v8"/></svg></button>
+  <button class="run-button" id="runButton" aria-label="Run Python program"><svg id="runIcon" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7z"/></svg><span id="runLabel">Run</span></button>
+</header>
+<main>
+  <section class="editor-panel" aria-label="Python code editor">
+    <nav class="tabbar"><div class="active-tab"><span class="py-mark">Py</span><span id="fileName">welcome.py</span><span id="dirtyDot" aria-label="Saved"></span></div><div class="tab-actions"><button class="icon-button small" id="newButton" aria-label="New file" title="New file">+</button><button class="icon-button small" id="menuButton" aria-label="Editor menu" title="Menu">⋯</button></div></nav>
+    <div class="breadcrumb"><span>workspace</span><span class="chevron">›</span><span id="crumb">welcome.py</span><span class="language-tag">PYTHON 3.13</span></div>
+    <div class="code-wrap"><textarea id="code" aria-label="Python source code"></textarea><div id="emptyState" hidden><span class="empty-symbol">{ }</span><h2>A little space for big ideas.</h2><p>Create a Python file to get started.</p><button id="emptyNew" class="primary">Create a file</button></div></div>
+    <div class="keybar" aria-label="Coding keys"><button data-key="tab">⇥ Tab</button><button data-key="unindent">⇤</button><button data-key="(">( )</button><button data-key="[">[ ]</button><button data-key="{">{ }</button><button data-key=":">:</button><button data-key="'">' '</button><button data-key="=">=</button><button data-key="_">_</button><button data-key="left">←</button><button data-key="right">→</button><button data-key="hint">abc</button></div>
+  </section>
+  <div class="splitter" id="splitter" role="separator" aria-label="Resize terminal" aria-orientation="horizontal" tabindex="0"><span></span></div>
+  <section class="terminal-panel" id="terminalPanel" aria-label="Program terminal">
+    <div class="terminal-toolbar"><div class="terminal-title"><span class="terminal-symbol">›_</span> TERMINAL <span id="terminalBadge">Python</span></div><div class="terminal-actions"><button class="icon-button small" id="copyOutput" aria-label="Copy output" title="Copy output"><svg viewBox="0 0 24 24"><path d="M8 8h12v13H8zM16 8V3H3v13h5"/></svg></button><button class="icon-button small" id="clearOutput" aria-label="Clear output" title="Clear output"><svg viewBox="0 0 24 24"><path d="M4 6h16M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7M14 10v7"/></svg></button><button class="icon-button small" id="collapseTerminal" aria-label="Collapse terminal" title="Collapse terminal">⌄</button></div></div>
+    <div class="terminal-body" id="terminalBody"><div class="terminal-welcome"><div><span class="live-dot"></span>Ready when you are.</div><p>Run your Python code. See what happens here.</p><span class="terminal-hint">LOCAL RUNTIME <span>·</span> WORKS OFFLINE</span></div></div>
+    <form id="inputForm" hidden autocomplete="off"><label for="stdin">›</label><input id="stdin" type="text" placeholder="Program input…" autocapitalize="off" spellcheck="false" aria-label="Program input"><button type="button" id="eofButton" title="Send end of input">EOF</button><button type="submit" aria-label="Send input">↵</button></form>
+  </section>
+</main>
+<footer class="statusbar"><span><i id="statusDot"></i><span id="statusText">Ready</span></span><span id="cursorStatus">Ln 1, Col 1</span><button id="fontButton" title="Change text size" aria-label="Change text size">Aa</button><span>UTF-8</span></footer>
+<div class="shade" id="shade" hidden></div>
+<aside id="drawer" hidden aria-label="File explorer"><div class="drawer-head"><div><span class="eyebrow">EXPLORER</span><h2>Your workspace</h2></div><button class="icon-button" id="closeDrawer" aria-label="Close files">×</button></div><div class="drawer-tools"><button id="drawerNew" class="primary">＋ New file</button><button id="importButton" class="secondary">Import .py</button></div><div class="folder-label">⌄ &nbsp; PYTHON FILES <span id="fileCount"></span></div><div id="fileList"></div><div class="drawer-footer"><span class="live-dot"></span> Saved on this device<p>Changes save automatically. Export a copy to keep it outside the app.</p></div></aside>
+<div id="menu" hidden role="menu"><button id="findButton">Find / replace <kbd>Ctrl F</kbd></button><button id="undoButton">Undo <kbd>Ctrl Z</kbd></button><button id="redoButton">Redo <kbd>Ctrl Y</kbd></button><hr><button id="renameButton">Rename file</button><button id="exportButton">Export file…</button><button id="deleteButton" class="danger">Delete file…</button><hr><button id="aboutButton">Libraries & help</button></div>
+<dialog id="fileDialog"><form id="fileForm"><span class="eyebrow">WORKSPACE</span><h2 id="dialogTitle">New Python file</h2><label for="filenameInput">File name</label><input id="filenameInput" placeholder="main.py" spellcheck="false" autocapitalize="off" autocomplete="off" maxlength="99"><p id="filenameError" class="error-text"></p><div class="dialog-actions"><button type="button" id="cancelDialog" class="secondary">Cancel</button><button class="primary" type="submit" id="dialogSubmit">Create file</button></div></form></dialog>
+<dialog id="confirmDialog"><h2>Delete this file?</h2><p id="deleteName"></p><p>This removes the copy in your workspace.</p><div class="dialog-actions"><button id="cancelDelete" class="secondary">Cancel</button><button id="confirmDelete" class="destructive">Delete file</button></div></dialog>
+<dialog id="aboutDialog"><span class="eyebrow">POCKET PYTHON 1.0</span><h2>Python, in your pocket.</h2><p>A local Python 3.13 interpreter with a focused editor. No account or internet connection is needed to run code.</p><h3>Included libraries</h3><p>Python’s Android-compatible standard library plus <strong>NumPy, Requests, SymPy and Pillow (PIL)</strong>.</p><p>Try math, random, datetime, json, re, pathlib, statistics, sqlite3, asyncio, urllib and more. Import your own .py modules into the same workspace.</p><h3>Good to know</h3><p>Each run starts fresh. Use input() to type in the terminal. Stop interrupts a running program. Files save automatically; Export makes a copy in a folder you choose.</p><p>The terminal shows program output and accepts Python input. It is not an Android shell or a pip installer. Extra packages require an app rebuild. Desktop GUI modules (Tkinter, Turtle), desktop executables and most multiprocessing features are unavailable. Internet requests need a connection.</p><h3>Keyboard shortcuts</h3><p>Ctrl + S · Save<br>Ctrl + Enter · Run<br>Ctrl + Space · Suggestions<br>Ctrl + F · Find<br>Ctrl + H · Replace<br>Tab / Shift + Tab · Indent / unindent</p><p class="muted">CodeMirror 5 (MIT) · CPython (PSF) · Chaquopy (MIT)<br>Third-party license notices are included in the source package and runtime packages.</p><button id="closeAbout" class="primary">Back to coding</button></dialog>
+<div id="toast" role="status" hidden></div>
+<script src="vendor/codemirror.js"></script><script src="vendor/python.js"></script><script src="vendor/matchbrackets.js"></script><script src="vendor/closebrackets.js"></script><script src="vendor/active-line.js"></script><script src="vendor/show-hint.js"></script><script src="vendor/dialog.js"></script><script src="vendor/searchcursor.js"></script><script src="vendor/search.js"></script><script src="app.js"></script>
+</body></html>

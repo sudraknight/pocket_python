@@ -1,0 +1,37 @@
+plugins {
+    id 'com.android.application'
+    id 'com.chaquo.python'
+}
+android {
+    namespace 'dev.pocketpython.ide'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'dev.pocketpython.ide'
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName '1.0'
+        ndk { abiFilters 'arm64-v8a', 'x86_64' }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    buildTypes {
+        release { minifyEnabled false }
+    }
+}
+chaquopy {
+    defaultConfig {
+        version '3.13'
+        if (System.getenv('POCKET_BUILD_PYTHON')) {
+            buildPython System.getenv('POCKET_BUILD_PYTHON')
+        }
+        pip {
+            install 'numpy'
+            install 'requests'
+            install 'sympy'
+            install 'pillow'
+        }
+    }
+}

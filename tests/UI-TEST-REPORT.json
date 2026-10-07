@@ -1,0 +1,16 @@
+{
+  "passed": [
+    "create and save",
+    "saved content and active file survive restart",
+    "Run, terminal input and finished state",
+    "Stop UI",
+    "program output treated as plain text",
+    "rename",
+    "export bridge",
+    "cancel deletion keeps file",
+    "confirmed deletion opens remaining file",
+    "small phone, landscape and keyboard-height layout"
+  ],
+  "errors": [],
+  "scope": "Browser UI with a mocked native bridge; not a device runtime test"
+}
